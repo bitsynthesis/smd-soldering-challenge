@@ -1,4 +1,4 @@
-.PHONY: analyzer clean flash loc size term
+.PHONY: analyzer asm clean flash flash-asm loc size term
 
 TEST_CC ?= avr-gcc
 
@@ -33,3 +33,10 @@ size:
 loc:
 	cloc test
 	cloc lib src
+
+asm:
+	avr-gcc -save-temps -mmcu=attiny10 src/main.S -o ./build/asm.elf
+	avr-objcopy -j .text -j .data -O ihex ./build/asm.elf ./build/asm.hex
+
+flash-asm: asm
+	sudo avrdude -v -c usbtiny -p attiny10 -U flash:w:./build/asm.hex
