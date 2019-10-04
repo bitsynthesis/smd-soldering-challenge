@@ -1,16 +1,46 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
-volatile int A = 0;
-volatile int B = 0;
+typedef enum {
+  PATTERN_BLINK_ALL,
+  PATTERN_CHASER,
+  PATTERN_DECAY,
+  PATTERN_END
+} Pattern;
 
-void toggle(void) {
-  if(A) {
-    PORTB = (1 << PORTB0) | (1 << PORTB1) | (1 << PORTB2);
-    A = 0;
-  } else {
-    PORTB = 0;
-    A = 1;
+typedef enum {
+  DIRECTION_DOWN,
+  DIRECTION_UP
+} Direction;
+
+volatile Pattern PATTERN = PATTERN_BLINK_ALL;
+volatile int PATTERN_COUNT = 0;
+const int PATTERN_REPS = 3;
+volatile int PATTERN_STATE = 0;
+volatile int DIRECTION = DIRECTION_UP;
+
+void pattern_step(Pattern pattern) {
+  int output = (1 << PORTB0) | (1 << PORTB1) | (1 << PORTB2);
+  switch(pattern) {
+  case PATTERN_BLINK_ALL:
+    PORTB ^= output;
+    break;
+  case PATTERN_CHASER:
+    if(2 < PATTERN_STATE) PATTERN_STATE = 0;
+    PORTB = output & ~(1 << PATTERN_STATE);
+    PATTERN_STATE++;
+    break;
+  case PATTERN_DECAY:
+    if(3 < PATTERN_STATE) PATTERN_STATE = 0;
+    if(PATTERN_STATE == 0) {
+      PORTB = output;
+    } else {
+      PORTB &= ~(1 << (PATTERN_STATE - 1));
+    }
+    PATTERN_STATE++;
+    break;
+  default:
+    break;
   }
 }
 
@@ -37,18 +67,29 @@ int main() {
 /* } */
 
 ISR(TIM0_COMPA_vect) {
-  toggle();
-  if(B) {
+  pattern_step(PATTERN);
+
+  if(DIRECTION) {
     if(OCR0A < 4096) {
       OCR0A += 128;
     } else {
-      B = 0;
+      DIRECTION = 0;
     }
   } else {
     if(256 < OCR0A) {
       OCR0A -= 128;
     } else {
-      B = 1;
+      DIRECTION = 1;
+      PATTERN_COUNT++;
     }
+  }
+
+  if((PATTERN_REPS - 1) < PATTERN_COUNT) {
+    PATTERN++;
+    if(PATTERN == PATTERN_END) {
+      PORTB = 0;
+      PATTERN = PATTERN_BLINK_ALL;
+    }
+    PATTERN_COUNT = 0;
   }
 }
