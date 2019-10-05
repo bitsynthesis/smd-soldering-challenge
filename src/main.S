@@ -10,6 +10,15 @@
 wait:
     rjmp wait
 
+
+; create patterns
+
+#define PATTERN_ALL_ON r
+#define PATTERN_ALL_BLINK r21
+#define PATTERN_CHASER 2
+#define PATTERN_GROW 3
+#define PATTERN_END 4
+
 .global TIM0_COMPA_vect
 TIM0_COMPA_vect:
     cpi STATE_A, 0
@@ -39,7 +48,7 @@ main:
     out TCCR0B, TMP
     ldi TMP, 0
     out TCNT0, TMP
-    ldi TMP, 0x04
+    ldi TMP, $4
     out OCR0AH, TMP
     ldi TMP, 0
     out OCR0AL, TMP

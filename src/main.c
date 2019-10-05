@@ -2,9 +2,10 @@
 #include <avr/io.h>
 
 typedef enum {
-  PATTERN_BLINK_ALL,
+  PATTERN_ALL_ON,
+  PATTERN_ALL_BLINK,
   PATTERN_CHASER,
-  PATTERN_DECAY,
+  PATTERN_GROW,
   PATTERN_END
 } Pattern;
 
@@ -13,16 +14,19 @@ typedef enum {
   DIRECTION_UP
 } Direction;
 
-volatile Pattern PATTERN = PATTERN_BLINK_ALL;
+volatile Pattern PATTERN = 0;
 volatile int PATTERN_COUNT = 0;
-const int PATTERN_REPS = 3;
+const int PATTERN_REPS = 1;
 volatile int PATTERN_STATE = 0;
 volatile int DIRECTION = DIRECTION_UP;
 
 void pattern_step(Pattern pattern) {
   int output = (1 << PORTB0) | (1 << PORTB1) | (1 << PORTB2);
   switch(pattern) {
-  case PATTERN_BLINK_ALL:
+  case PATTERN_ALL_ON:
+    PORTB = 0;
+    break;
+  case PATTERN_ALL_BLINK:
     PORTB ^= output;
     break;
   case PATTERN_CHASER:
@@ -30,7 +34,7 @@ void pattern_step(Pattern pattern) {
     PORTB = output & ~(1 << PATTERN_STATE);
     PATTERN_STATE++;
     break;
-  case PATTERN_DECAY:
+  case PATTERN_GROW:
     if(3 < PATTERN_STATE) PATTERN_STATE = 0;
     if(PATTERN_STATE == 0) {
       PORTB = output;
@@ -86,10 +90,7 @@ ISR(TIM0_COMPA_vect) {
 
   if((PATTERN_REPS - 1) < PATTERN_COUNT) {
     PATTERN++;
-    if(PATTERN == PATTERN_END) {
-      PORTB = 0;
-      PATTERN = PATTERN_BLINK_ALL;
-    }
+    if(PATTERN == PATTERN_END) PATTERN = 1;
     PATTERN_COUNT = 0;
   }
 }
