@@ -26,6 +26,7 @@ $(SMDC_ELF):
 
 clean:
 	rm $(BUILD_DIR)/* || true
+	rm main.s main.o || true
 
 size:
 	avr-size -Cx --mcu attiny10 $(SMDC_ELF)
@@ -40,3 +41,6 @@ asm:
 
 flash-asm: asm
 	sudo avrdude -v -c usbtiny -p attiny10 -U flash:w:./build/asm.hex
+
+size-asm:
+	avr-size -Cx --mcu attiny10 ./build/asm.elf
