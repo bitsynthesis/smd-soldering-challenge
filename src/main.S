@@ -14,23 +14,6 @@
 
 #define MEM_ADDR_START 0x40
 
-.macro BLINK4
-    ldi TMP, 0b00000000
-    st X+, TMP
-    ldi TMP, 0b00000111
-    st X+, TMP
-    ldi TMP, 0b00000000
-    st X+, TMP
-    ldi TMP, 0b00000111
-    st X+, TMP
-    ldi TMP, 0b00000000
-    st X+, TMP
-    ldi TMP, 0b00000111
-    st X+, TMP
-    ldi TMP, 0b00000000
-    st X+, TMP
-.endm
-
 .global main
 main:
     ldi PATTERN_DIRECTION, 1
@@ -47,9 +30,8 @@ main:
     ldi TMP, 0
     out TCNT0, TMP
     ldi TMP, 0x0F
-    ; ldi TMP, 0x06
     out OCR0AH, TMP
-    ldi TMP, 0x80
+    ldi TMP, 0x00
     out OCR0AL, TMP
     ldi TMP, 0b00000011
     out TIMSK0, TMP
@@ -58,8 +40,23 @@ main:
     clr XH
     ldi XL, MEM_ADDR_START
 
-    BLINK4
+    ; blink
+    ldi TMP, 0b00000000
+    st X+, TMP
+    ldi TMP, 0b00000111
+    st X+, TMP
+    ldi TMP, 0b00000000
+    st X+, TMP
+    ldi TMP, 0b00000111
+    st X+, TMP
+    ldi TMP, 0b00000000
+    st X+, TMP
+    ldi TMP, 0b00000111
+    st X+, TMP
+    ldi TMP, 0b00000000
+    st X+, TMP
 
+    ; flyover
     ldi TMP, 0b00000111
     st X+, TMP
     ldi TMP, 0b00000110
@@ -75,15 +72,34 @@ main:
     ldi TMP, 0b00000111
     st X+, TMP
 
-    BLINK4
+    ; in out
+    ldi TMP, 0b00000010
+    st X+, TMP
+    ldi TMP, 0b00000101
+    st X+, TMP
+    ldi TMP, 0b00000010
+    st X+, TMP
+    ldi TMP, 0b00000101
+    st X+, TMP
+    ldi TMP, 0b00000010
+    st X+, TMP
+    ldi TMP, 0b00000101
+    st X+, TMP
+    ldi TMP, 0b00000010
+    st X+, TMP
 
+    ; chaser
     ldi TMP, 0b00000110
     st X+, TMP
     ldi TMP, 0b00000101
     st X+, TMP
     ldi TMP, 0b00000011
     st X+, TMP
-    ldi TMP, 0b00000111
+    ldi TMP, 0b00000101
+    st X+, TMP
+    ldi TMP, 0b00000110
+    st X+, TMP
+    ldi TMP, 0b00000101
     st X+, TMP
     ldi TMP, 0b00000011
     st X+, TMP
