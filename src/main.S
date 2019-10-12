@@ -148,7 +148,7 @@ tim0_compa_vect_speed:
     in TMP2, OCR0AH
     in TMP, OCR0AL
 
-    ldi TMP3, 0x20
+    ldi TMP3, 0x08
     ldi TMP4, 0x00
 
     cpi SPEED_DIRECTION, 1
