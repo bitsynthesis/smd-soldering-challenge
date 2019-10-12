@@ -127,7 +127,7 @@ tim0_compa_vect_pattern_up:
     out PORTB, TMP
 
     cp XL, MEM_ADDR_END
-    brne tim0_compa_vect_end
+    brne tim0_compa_vect_speed
 
     dec XL
     ldi PATTERN_DIRECTION, 0
@@ -145,8 +145,8 @@ tim0_compa_vect_pattern_down:
     ldi PATTERN_DIRECTION, 1
 
 tim0_compa_vect_speed:
-    in TMP, OCR0AL
     in TMP2, OCR0AH
+    in TMP, OCR0AL
 
     ldi TMP3, 0x20
     ldi TMP4, 0x00
@@ -181,8 +181,3 @@ tim0_compa_vect_end:
     out OCR0AL, TMP
 
     reti
-
-; To compare 16bit numbers...
-;
-;   cp A_LOW, B_LOW
-;   cpc A_HIGH, B_HIGH
