@@ -1,0 +1,304 @@
+EESchema Schematic File Version 4
+LIBS:bootleg-smd-challenge-cache
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L power:+3V0 #PWR0101
+U 1 1 5D51FA27
+P 1100 1850
+F 0 "#PWR0101" H 1100 1700 50  0001 C CNN
+F 1 "+3V0" H 1115 2023 50  0000 C CNN
+F 2 "" H 1100 1850 50  0001 C CNN
+F 3 "" H 1100 1850 50  0001 C CNN
+	1    1100 1850
+	1    0    0    -1  
+$EndComp
+Text Label 2550 2200 0    50   ~ 0
++V
+$Comp
+L Device:Battery_Cell BATTERY1
+U 1 1 5D51E8B4
+P 1100 2700
+F 0 "BATTERY1" H 1218 2796 50  0000 L CNN
+F 1 "Battery_Cell" H 1218 2705 50  0000 L CNN
+F 2 "BBS Components:BatteryHolder12_5mm_cell_Harwin_S8201-46R_NoSilk" V 1100 2760 50  0001 C CNN
+F 3 "~" V 1100 2760 50  0001 C CNN
+	1    1100 2700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1100 1850 1100 2100
+Wire Wire Line
+	2400 2100 1100 2100
+Connection ~ 1100 2100
+Wire Wire Line
+	1100 2100 1100 2500
+$Comp
+L Switch:SW_SPDT POW1
+U 1 1 5D52009C
+P 2600 2200
+F 0 "POW1" H 2600 1875 50  0000 C CNN
+F 1 "SW_SPST" H 2600 1966 50  0000 C CNN
+F 2 "BBS Components:SPDT_LowProfile_SMD_Switch_PCM12SMTR_NoSilk" H 2600 2200 50  0001 C CNN
+F 3 "~" H 2600 2200 50  0001 C CNN
+	1    2600 2200
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3200 2800 3300 2800
+Wire Wire Line
+	3200 4100 3300 4100
+Wire Wire Line
+	3200 3450 3300 3450
+Wire Wire Line
+	3200 4750 3300 4750
+Wire Wire Line
+	3750 4100 3600 4100
+$Comp
+L Device:R_Small R201
+U 1 1 5D5F1F7B
+P 3850 4100
+F 0 "R201" H 3909 4146 50  0000 L CNN
+F 1 "R_Small" H 3909 4055 50  0000 L CNN
+F 2 "BBS Components:R_0201_HandSoldering" H 3850 4100 50  0001 C CNN
+F 3 "~" H 3850 4100 50  0001 C CNN
+	1    3850 4100
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:LED LED201
+U 1 1 5D5F1F74
+P 3450 4100
+F 0 "LED201" V 3489 3983 50  0000 R CNN
+F 1 "LED" V 3398 3983 50  0000 R CNN
+F 2 "BBS Components:LED_0201_HandSoldering" H 3450 4100 50  0001 C CNN
+F 3 "~" H 3450 4100 50  0001 C CNN
+	1    3450 4100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3750 2800 3600 2800
+$Comp
+L Device:R_Small R402
+U 1 1 5D5F0DC7
+P 3850 2800
+F 0 "R402" H 3909 2846 50  0000 L CNN
+F 1 "R_Small" H 3909 2755 50  0000 L CNN
+F 2 "BBS Components:R_0402_HandSoldering" H 3850 2800 50  0001 C CNN
+F 3 "~" H 3850 2800 50  0001 C CNN
+	1    3850 2800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:LED LED402
+U 1 1 5D5F0DC0
+P 3450 2800
+F 0 "LED402" V 3489 2683 50  0000 R CNN
+F 1 "LED" V 3398 2683 50  0000 R CNN
+F 2 "BBS Components:LED_0402_HandSoldering" H 3450 2800 50  0001 C CNN
+F 3 "~" H 3450 2800 50  0001 C CNN
+	1    3450 2800
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3750 3450 3600 3450
+$Comp
+L Device:R_Small R603
+U 1 1 5D5F0374
+P 3850 3450
+F 0 "R603" H 3909 3496 50  0000 L CNN
+F 1 "R_Small" H 3909 3405 50  0000 L CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" H 3850 3450 50  0001 C CNN
+F 3 "~" H 3850 3450 50  0001 C CNN
+	1    3850 3450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:LED LED603
+U 1 1 5D5F036D
+P 3450 3450
+F 0 "LED603" V 3489 3333 50  0000 R CNN
+F 1 "LED" V 3398 3333 50  0000 R CNN
+F 2 "BBS Components:LED_0603_HandSoldering" H 3450 3450 50  0001 C CNN
+F 3 "~" H 3450 3450 50  0001 C CNN
+	1    3450 3450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3750 4750 3600 4750
+$Comp
+L Device:R_Small R805
+U 1 1 5D5EF5DA
+P 3850 4750
+F 0 "R805" H 3909 4796 50  0000 L CNN
+F 1 "R_Small" H 3909 4705 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" H 3850 4750 50  0001 C CNN
+F 3 "~" H 3850 4750 50  0001 C CNN
+	1    3850 4750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:LED LED805
+U 1 1 5D5EF5D3
+P 3450 4750
+F 0 "LED805" V 3489 4633 50  0000 R CNN
+F 1 "LED" V 3398 4633 50  0000 R CNN
+F 2 "BBS Components:LED_0805_HandSoldering" H 3450 4750 50  0001 C CNN
+F 3 "~" H 3450 4750 50  0001 C CNN
+	1    3450 4750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3200 5400 3300 5400
+Wire Wire Line
+	3750 5400 3600 5400
+$Comp
+L Device:R_Small R1206
+U 1 1 5D530DE8
+P 3850 5400
+F 0 "R1206" H 3909 5446 50  0000 L CNN
+F 1 "R_Small" H 3909 5355 50  0000 L CNN
+F 2 "BBS Components:R_1206_HandSoldering" H 3850 5400 50  0001 C CNN
+F 3 "~" H 3850 5400 50  0001 C CNN
+	1    3850 5400
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:LED LED1206
+U 1 1 5D521C17
+P 3450 5400
+F 0 "LED1206" V 3489 5283 50  0000 R CNN
+F 1 "LED" V 3398 5283 50  0000 R CNN
+F 2 "BBS Components:LED_1206_HandSoldering" H 3450 5400 50  0001 C CNN
+F 3 "~" H 3450 5400 50  0001 C CNN
+	1    3450 5400
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3950 2800 4150 2800
+Wire Wire Line
+	3950 3450 4150 3450
+Wire Wire Line
+	4150 3450 4150 2800
+Connection ~ 4150 2800
+Wire Wire Line
+	4150 2800 4950 2800
+Wire Wire Line
+	3950 4100 4300 4100
+Wire Wire Line
+	4300 4100 4300 2900
+Wire Wire Line
+	4300 2900 4950 2900
+Wire Wire Line
+	3950 4750 4300 4750
+Wire Wire Line
+	4300 4750 4300 4100
+Connection ~ 4300 4100
+Wire Wire Line
+	3950 5400 4450 5400
+Wire Wire Line
+	4450 3000 4950 3000
+Wire Wire Line
+	3200 2800 3200 3450
+Connection ~ 3200 3450
+Wire Wire Line
+	3200 3450 3200 4100
+Connection ~ 3200 4100
+Wire Wire Line
+	3200 4100 3200 4750
+Wire Wire Line
+	3200 5400 3200 4750
+Connection ~ 3200 4750
+Wire Wire Line
+	2800 2200 3200 2200
+Wire Wire Line
+	5550 2200 5550 2500
+Wire Wire Line
+	3200 2800 3200 2200
+Connection ~ 3200 2800
+Connection ~ 3200 2200
+Wire Wire Line
+	3200 2200 5550 2200
+$Comp
+L Device:C C1
+U 1 1 5D6635E5
+P 6800 3100
+F 0 "C1" H 6915 3146 50  0000 L CNN
+F 1 "C" H 6915 3055 50  0000 L CNN
+F 2 "BBS Components:C_0402_HandSoldering" H 6838 2950 50  0001 C CNN
+F 3 "~" H 6800 3100 50  0001 C CNN
+	1    6800 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5550 2200 6800 2200
+Wire Wire Line
+	6800 2200 6800 2950
+Connection ~ 5550 2200
+Wire Wire Line
+	6800 3250 6800 4000
+Wire Wire Line
+	5550 4000 5550 3700
+Wire Wire Line
+	4450 3000 4450 5400
+$Comp
+L MCU_Microchip_ATtiny:ATtiny10-TS U1
+U 1 1 5D602555
+P 5550 3100
+F 0 "U1" H 5020 3146 50  0000 R CNN
+F 1 "ATtiny10-TS" H 5020 3055 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23-6_Handsoldering" H 5550 3100 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8127-AVR-8-bit-Microcontroller-ATtiny4-ATtiny5-ATtiny9-ATtiny10_Datasheet.pdf" H 5550 3100 50  0001 C CNN
+	1    5550 3100
+	-1   0    0    -1  
+$EndComp
+Connection ~ 6800 4000
+Wire Wire Line
+	5550 4000 6800 4000
+Wire Wire Line
+	6800 4000 6800 5400
+$Comp
+L power:GND #PWR0102
+U 1 1 5D51FC93
+P 6800 5400
+F 0 "#PWR0102" H 6800 5150 50  0001 C CNN
+F 1 "GND" H 6805 5227 50  0000 C CNN
+F 2 "" H 6800 5400 50  0001 C CNN
+F 3 "" H 6800 5400 50  0001 C CNN
+	1    6800 5400
+	1    0    0    -1  
+$EndComp
+Text Label 2950 2200 0    50   ~ 0
+V+
+Text Label 4550 2800 0    50   ~ 0
+PB0
+Text Label 4550 2900 0    50   ~ 0
+PB1
+Text Label 4550 3000 0    50   ~ 0
+PB2
+$Comp
+L power:GND #PWR0103
+U 1 1 5D86DEEB
+P 1100 3350
+F 0 "#PWR0103" H 1100 3100 50  0001 C CNN
+F 1 "GND" H 1105 3177 50  0000 C CNN
+F 2 "" H 1100 3350 50  0001 C CNN
+F 3 "" H 1100 3350 50  0001 C CNN
+	1    1100 3350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1100 2800 1100 3350
+$EndSCHEMATC
