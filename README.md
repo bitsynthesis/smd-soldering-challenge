@@ -16,8 +16,8 @@ Back
 
 # Programming
 
-Requires avr-gcc, avrdude, and a TPI compatible programmer. Works with the [Tiny
-AVR Programmer](https://www.sparkfun.com/products/11801) from SparkFun.
+Requires avr-gcc, avrdude, and a TPI compatible programmer like the [Tiny
+AVR Programmer](https://www.sparkfun.com/products/11801).
 
   make flash
 
