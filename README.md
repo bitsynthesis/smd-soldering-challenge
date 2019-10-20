@@ -5,16 +5,17 @@ the ATTiny10.
 
 Project created with [Kicad 5](http://www.kicad-pcb.org).
 
-![UCP PCB](/images/smd-pcb.jpg)\
+![SMD Soldering Challenge PCB](/images/smd-pcb.jpg)\
 PCB
 
-![UCP front](/images/smd-front.jpg)\
+![SMD Soldering Challenge front](/images/smd-front.jpg)\
 Front
 
-![UCP PCB](/images/smd-back.jpg)\
+![SMD Soldering Challenge back](/images/smd-back.jpg)\
 Back
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/fLHSi1b7yYU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![SMD Soldering Challenge blinking](/images/smd-blinking.gif)](https://youtu.be/DWTuIyh-ze0)]\
+Blinking [video](https://youtu.be/DWTuIyh-ze0)
 
 # Programming
 
