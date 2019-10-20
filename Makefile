@@ -1,46 +1,26 @@
-.PHONY: analyzer asm clean flash flash-asm loc size term
-
-TEST_CC ?= avr-gcc
+.PHONY: all clean flash loc size
 
 BUILD_DIR=./build
+ELF_FILE=$(BUILD_DIR)/smd-challenge.elf
+HEX_FILE=$(BUILD_DIR)/smd-challenge.hex
 
-SMDC_ELF=$(BUILD_DIR)/smdc.elf
-SMDC_HEX=$(SMDC_ELF:%.elf=%.hex)
-
-SMDC_FLAGS=-std=c11 -g -Os -mmcu=attiny10 -Ilib -Wall -Wpedantic -Wdouble-promotion -Wshadow -Wlogical-op -fno-strict-aliasing -fno-strict-overflow -fno-strict-aliasing -fno-strict-overflow
-
-SMDC_SOURCE_FILES=src/main.c
-
-all:
-	make clean
-	make $(SMDC_HEX)
-
-flash: $(SMDC_HEX)
-	sudo avrdude -v -c usbtiny -p attiny10 $(SMDC_AVR_FUSES) -U flash:w:$(SMDC_HEX)
-
-$(SMDC_HEX): $(SMDC_ELF)
-	avr-objcopy -j .text -j .data -O ihex $< $@
-
-$(SMDC_ELF):
-	avr-gcc $(SMDC_FLAGS) -o $@ $(SMDC_SOURCE_FILES)
+all: clean
+	make $(HEX_FILE)
 
 clean:
-	rm $(BUILD_DIR)/* || true
-	rm main.s main.o || true
+	rm $(BUILD_DIR)/* main.s main.o || true
 
-size:
-	avr-size -Cx --mcu attiny10 $(SMDC_ELF)
+$(BUILD_DIR):
+	mkdir $@
 
-loc:
-	cloc test
-	cloc lib src
+$(ELF_FILE): $(BUILD_DIR)
+	avr-gcc -save-temps -mmcu=attiny10 src/main.S -o $@
 
-asm:
-	avr-gcc -save-temps -mmcu=attiny10 src/main.S -o ./build/asm.elf
-	avr-objcopy -j .text -j .data -O ihex ./build/asm.elf ./build/asm.hex
+$(HEX_FILE): $(ELF_FILE)
+	avr-objcopy -j .text -j .data -O ihex $< $@
 
-flash-asm: asm
-	sudo avrdude -v -c usbtiny -p attiny10 -U flash:w:./build/asm.hex
+flash: $(HEX_FILE)
+	sudo avrdude -v -c usbtiny -p attiny10 -U flash:w:$<
 
-size-asm:
-	avr-size -Cx --mcu attiny10 ./build/asm.elf
+size: $(ELF_FILE)
+	avr-size -Cx --mcu attiny10 $(ELF_FILE)
