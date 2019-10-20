@@ -8,7 +8,8 @@ all: clean
 	make $(HEX_FILE)
 
 clean:
-	rm $(BUILD_DIR)/* main.s main.o || true
+	rm -r $(BUILD_DIR) || true
+	rm main.s main.o || true
 
 $(BUILD_DIR):
 	mkdir $@
