@@ -14,6 +14,8 @@ Front
 ![UCP PCB](/images/smd-back.jpg)\
 Back
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fLHSi1b7yYU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # Programming
 
 Requires avr-gcc, avrdude, and a TPI compatible programmer like the [Tiny
