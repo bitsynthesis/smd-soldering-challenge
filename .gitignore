@@ -1,1 +1,4 @@
 build
+main.o
+main.s
+fp-info-cache
