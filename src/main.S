@@ -9,12 +9,12 @@
 #define TMP               r20
 #define SPEED_CMP_L       r21
 #define SPEED_CMP_H       r22
-#define SPEED_INC_L       r23
-#define SPEED_INC_H       r24
+#define SPEED_FAST_L      r23
+#define SPEED_FAST_H      r24
 #define SPEED_LIMIT       r25
 
-#define DEC               0
-#define INC               1
+#define SLOW              0
+#define FAST              1
 #define REV               0
 #define FWD               1
 
@@ -23,10 +23,10 @@
 .global main
 main:
     ldi PATTERN_DIRECTION, FWD      ; start from the beginning of the pattern
-    ldi SPEED_DIRECTION, INC        ; start slow and speed up
+    ldi SPEED_DIRECTION, FAST       ; start slow and speed up
 
-    ldi SPEED_INC_L, 0x08           ; set speed increment low byte
-    ldi SPEED_INC_H, 0x00           ; set speed increment high byte
+    ldi SPEED_FAST_L, 0x08          ; set speed increment low byte
+    ldi SPEED_FAST_H, 0x00          ; set speed increment high byte
 
     ldi TMP, 0b00000111             ; load output pin mask into TMP
     out PORTB, TMP                  ; enable output pins
@@ -149,30 +149,30 @@ tim0_compa_vect_speed:
     in SPEED_CMP_H, OCR0AH          ; load current speed high byte
     in SPEED_CMP_L, OCR0AL          ; load current speed low byte
 
-    cpi SPEED_DIRECTION, INC        ; check if speed increasing
+    cpi SPEED_DIRECTION, FAST       ; check if speed increasing
     brne tim0_compa_vect_speed_dn   ; if speed is not increasing, it's decreasing
 
 tim0_compa_vect_speed_up:
-    ldi SPEED_DIRECTION, INC        ; set direction to increasing
+    ldi SPEED_DIRECTION, FAST       ; set direction to increasing
 
     ldi SPEED_LIMIT, 0x01           ; set speed limit to the smallest cycle time
     cp SPEED_CMP_H, SPEED_LIMIT     ; compare current cycle time with limit
     brlo tim0_compa_vect_speed_dn   ; if current cycle time less than limit, switch direction
 
-    sub SPEED_CMP_L, SPEED_INC_L    ; subtract increment from current low byte
-    sbc SPEED_CMP_H, SPEED_INC_H    ; subtract increment from current high byte
+    sub SPEED_CMP_L, SPEED_FAST_L   ; subtract increment from current low byte
+    sbc SPEED_CMP_H, SPEED_FAST_H   ; subtract increment from current high byte
 
     rjmp tim0_compa_vect_end        ; finish pattern step
 
 tim0_compa_vect_speed_dn:
-    ldi SPEED_DIRECTION, DEC        ; set direction to decreasing
+    ldi SPEED_DIRECTION, SLOW       ; set direction to decreasing
 
     ldi SPEED_LIMIT, 0x0F           ; set speed limit to largest cycle time
     cp SPEED_LIMIT, SPEED_CMP_H     ; compare current cycle time with limit
     brlo tim0_compa_vect_speed_up   ; if limit less than current cycle time, switch direction
 
-    add SPEED_CMP_L, SPEED_INC_L    ; add increment to current low byte
-    adc SPEED_CMP_H, SPEED_INC_H    ; add increment to current high byte
+    add SPEED_CMP_L, SPEED_FAST_L   ; add increment to current low byte
+    adc SPEED_CMP_H, SPEED_FAST_H   ; add increment to current high byte
 
 tim0_compa_vect_end:
     out OCR0AH, SPEED_CMP_H         ; set timer compare high byte for modified speed
