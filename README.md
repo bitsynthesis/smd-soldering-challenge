@@ -22,7 +22,7 @@ Blinking [video](https://youtu.be/DWTuIyh-ze0)
 Requires avr-gcc, avrdude, and a TPI compatible programmer like the [Tiny
 AVR Programmer](https://www.sparkfun.com/products/11801).
 
-  make flash
+    make flash
 
 # License
 

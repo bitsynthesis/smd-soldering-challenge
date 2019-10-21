@@ -22,31 +22,31 @@
 
 .global main
 main:
-    ldi PATTERN_DIRECTION, 1    		; start from the beginning of the pattern
-    ldi SPEED_DIRECTION, 1      		; start slow and speed up
+    ldi PATTERN_DIRECTION, FWD      ; start from the beginning of the pattern
+    ldi SPEED_DIRECTION, INC        ; start slow and speed up
 
-    ldi SPEED_INC_L, 0x08       		; set speed increment low byte
-    ldi SPEED_INC_H, 0x00       		; set speed increment high byte
+    ldi SPEED_INC_L, 0x08           ; set speed increment low byte
+    ldi SPEED_INC_H, 0x00           ; set speed increment high byte
 
-    ldi TMP, 0b00000111         		; load output pin mask into TMP
-    out PORTB, TMP              		; enable output pins
-    out DDRB, TMP               		; set all output pins high to start (LEDs off)
+    ldi TMP, 0b00000111             ; load output pin mask into TMP
+    out PORTB, TMP                  ; enable output pins
+    out DDRB, TMP                   ; set all output pins high to start (LEDs off)
 
-    ldi TMP, 0b00001011         		; load timer configuration into TMP register
-    out TCCR0B, TMP             		; configure timer for CTC mode and 1/64 prescaler
-    ldi TMP, 0                  		; load starting counter value into TMP
-    out TCNT0, TMP              		; set starting counter value
-    ldi TMP, 0x0F               		; load starting counter compare high byte into TMP
-    out OCR0AH, TMP             		; set starting counter compare high byte
-    ldi TMP, 0x00               		; load starting counter compare low byte into TMP
-    out OCR0AL, TMP             		; set starting counter compare value
-    ldi TMP, 0b00000010         		; load timer interrupt mask into TMP
-    out TIMSK0, TMP             		; enable output compare A interrupt
+    ldi TMP, 0b00001011             ; load timer configuration into TMP register
+    out TCCR0B, TMP                 ; configure timer for CTC mode and 1/64 prescaler
+    ldi TMP, 0                      ; load starting counter value into TMP
+    out TCNT0, TMP                  ; set starting counter value
+    ldi TMP, 0x0F                   ; load starting counter compare high byte into TMP
+    out OCR0AH, TMP                 ; set starting counter compare high byte
+    ldi TMP, 0x00                   ; load starting counter compare low byte into TMP
+    out OCR0AL, TMP                 ; set starting counter compare value
+    ldi TMP, 0b00000010             ; load timer interrupt mask into TMP
+    out TIMSK0, TMP                 ; enable output compare A interrupt
 
-    clr XH                      		; clear X high byte
-    ldi XL, MEM_ADDR_START      		; load first pattern address into X
+    clr XH                          ; clear X high byte
+    ldi XL, MEM_ADDR_START          ; load first pattern address into X
 
-    ldi TMP, 0b00000000         		; load blink pattern into memory
+    ldi TMP, 0b00000000             ; load blink pattern into memory
     st X+, TMP
     ldi TMP, 0b00000111
     st X+, TMP
@@ -61,7 +61,7 @@ main:
     ldi TMP, 0b00000000
     st X+, TMP
 
-    ldi TMP, 0b00000111         		; load flyover pattern into memory
+    ldi TMP, 0b00000111             ; load flyover pattern into memory
     st X+, TMP
     ldi TMP, 0b00000110
     st X+, TMP
@@ -76,7 +76,7 @@ main:
     ldi TMP, 0b00000111
     st X+, TMP
 
-    ldi TMP, 0b00000010         		; load in / out pattern into memory
+    ldi TMP, 0b00000010             ; load in / out pattern into memory
     st X+, TMP
     ldi TMP, 0b00000101
     st X+, TMP
@@ -91,7 +91,7 @@ main:
     ldi TMP, 0b00000010
     st X+, TMP
 
-    ldi TMP, 0b00000110         		; load chaser pattern into memory
+    ldi TMP, 0b00000110             ; load chaser pattern into memory
     st X+, TMP
     ldi TMP, 0b00000101
     st X+, TMP
@@ -110,40 +110,40 @@ main:
     ldi TMP, 0b00000110
     st X+, TMP
 
-    mov MEM_ADDR_END, XL        		; save the end of pattern memory address
-    ldi XL, MEM_ADDR_START      		; reset X to the beginning of the pattern
+    mov MEM_ADDR_END, XL            ; save the end of pattern memory address
+    ldi XL, MEM_ADDR_START          ; reset X to the beginning of the pattern
 
-    sei                         		; enable interrupts
+    sei                             ; enable interrupts
 
 wait:
-    rjmp wait                   		; do nothing, wait for timer interrupt
+    rjmp wait                       ; do nothing, wait for timer interrupt
 
-.global TIM0_COMPA_vect         		; define timer interrupt
+.global TIM0_COMPA_vect             ; define timer interrupt
 TIM0_COMPA_vect:
-    cpi PATTERN_DIRECTION, FWD  		; check the pattern direction
-    brne tim0_compa_vect_pattern_dn	; if not 1, pattern is in reverse
+    cpi PATTERN_DIRECTION, FWD      ; check the pattern direction
+    brne tim0_compa_vect_pattern_dn ; if not 1, pattern is in reverse
 
 tim0_compa_vect_pattern_up:
-    ld TMP, X+                  		; load the pattern step at X into TMP, increment X
-    out PORTB, TMP              		; output the current pattern step
+    ld TMP, X+                      ; load the pattern step at X into TMP, increment X
+    out PORTB, TMP                  ; output the current pattern step
 
-    cp XL, MEM_ADDR_END         		; check if at the end of pattern
-    brne tim0_compa_vect_speed  		; if not at the end, change speed
+    cp XL, MEM_ADDR_END             ; check if at the end of pattern
+    brne tim0_compa_vect_speed      ; if not at the end, change speed
 
-    dec XL                      		; if at the end of pattern, decrement X...
-    ldi PATTERN_DIRECTION, REV  		; ...and change direction to reverse
+    dec XL                          ; if at the end of pattern, decrement X...
+    ldi PATTERN_DIRECTION, REV      ; ...and change direction to reverse
 
-    rjmp tim0_compa_vect_speed  		; then change speed
+    rjmp tim0_compa_vect_speed      ; then change speed
 
 tim0_compa_vect_pattern_dn:
-    ld TMP, -X                  		; load the pattern step at X into TMP, decrement X
-    out PORTB, TMP              		; output the current pattern step
+    ld TMP, -X                      ; load the pattern step at X into TMP, decrement X
+    out PORTB, TMP                  ; output the current pattern step
 
-    cpi XL, MEM_ADDR_START      		; check if at the start of pattern
-    brne tim0_compa_vect_speed  		; if not at the start, change speed
+    cpi XL, MEM_ADDR_START          ; check if at the start of pattern
+    brne tim0_compa_vect_speed      ; if not at the start, change speed
 
-    inc XL                      		; if at the start of pattern, increment X...
-    ldi PATTERN_DIRECTION, FWD  		; ...and change direction to forward
+    inc XL                          ; if at the start of pattern, increment X...
+    ldi PATTERN_DIRECTION, FWD      ; ...and change direction to forward
 
 tim0_compa_vect_speed:
     in SPEED_CMP_H, OCR0AH          ; load current speed high byte
